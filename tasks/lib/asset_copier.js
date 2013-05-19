@@ -4,6 +4,7 @@ var wrench = require('wrench');
 var path = require('path');
 var grunt = require('grunt');
 var fs = require('fs');
+var bower = require('bower');
 
 var Copier = function(assets, options, report) {
   this.assets = assets;
@@ -42,7 +43,9 @@ Copier.prototype.copyAssets = function(type, assets) {
       var destinationDir = path.join(this.options.targetDir, this.options.layout(type, pkg));
       grunt.file.mkdir(destinationDir);
       if (isFile) {
-        destination = path.join(destinationDir, path.basename(source));
+        var preservedPath = path.relative(path.join(bower.config.directory, pkg), source);
+        destination = path.join(destinationDir, preservedPath);
+
         grunt.file.copy(source, destination);
       } else {
         destination = destinationDir;
