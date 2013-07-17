@@ -159,5 +159,74 @@ exports.bower_assets = {
       ],
       "jquery": path.normalize("bo_co/jquery/jquery.js")
     });
+  },
+
+  overrideRegexBowerConfiguration: function(test) {
+    test.expect(1);
+
+    var expected = {
+      "__untyped__": {},
+      "js": {
+        "bootstrap": [ path.normalize("bo_co/bootstrap/js/bootstrap-affix.js") ],
+        "jquery": [
+          path.normalize("bo_co/jquery/jquery-migrate.js"),
+          path.normalize("bo_co/jquery/jquery-migrate.min.js"),
+          path.normalize("bo_co/jquery/jquery.js"),
+          path.normalize("bo_co/jquery/jquery.min.js")],
+        "underscore": [ path.normalize("bo_co/underscore/underscore.js") ]
+      },
+      "scss": {
+        "bootstrap": [ path.normalize("bo_co/bootstrap/lib/_mixins.scss") ]
+      },
+      "css": {
+        "underscore": [ path.normalize("bo_co/underscore/underscore.css") ] 
+      }
+    };
+
+    this.bower.config.directory = 'bo_co';
+
+    verify(
+      'regexOverridesOfBower',
+      'should match jquery using regex expression "*"',
+      expected,
+      test,
+      this.bower);
+
+    this.bowerCommands.list.emit('data', {
+      "bootstrap": [
+        path.normalize("bo_co/bootstrap/docs/assets/js/bootstrap.js"),
+        path.normalize("bo_co/bootstrap/docs/assets/css/bootstrap.css")
+      ],
+      "jquery": path.normalize("bo_co/jquery/jquery.js"),
+      "underscore": [
+        path.normalize("bo_co/underscore/underscore.js"),
+        path.normalize("bo_co/underscore/underscore.css")
+      ],
+    });
+  },
+  
+  support_bower_components_folder: function(test) {
+    test.expect(1);
+
+    var expected = {
+      "__untyped__": {
+        "jquery": [path.normalize("bower_components/jquery/jquery.js")]
+      }
+    };
+
+    var bower = require("bower");
+    console.log(bower.config.directory);
+    this.bower.config.directory = bower.config.directory;
+    this.bower.config.json = bower.config.json;
+    verify(
+      'support_bower_components_folder',
+      'should match "bower_components"',
+      expected,
+      test,
+      this.bower);
+
+    this.bowerCommands.list.emit('data', {
+      "jquery": path.normalize("bower_components/jquery/jquery.js"),
+    });
   }
 };
