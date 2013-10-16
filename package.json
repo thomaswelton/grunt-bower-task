@@ -1,7 +1,7 @@
 {
   "name": "grunt-bower-task",
   "description": "Install Bower packages.",
-  "version": "0.2.4",
+  "version": "0.3.2",
   "homepage": "https://github.com/yatskevich/grunt-bower-task",
   "author": {
     "name": "Ivan Yatskevich",
@@ -34,7 +34,7 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "bower": "~0.10.0",
+    "bower": "~1.2.0",
     "lodash": "~0.10.0",
     "rimraf": "~2.0.2",
     "wrench": "~1.4.3",
@@ -42,12 +42,15 @@
     "async": "~0.1.22"
   },
   "devDependencies": {
-    "grunt-contrib-jshint": "0.3.0",
-    "grunt-contrib-nodeunit": "~0.1.2",
     "grunt": "~0.4.1",
-    "grunt-cli": "~0.1.6"
+    "grunt-cli": "~0.1.6",
+    "grunt-contrib-jshint": "0.3.0",
+    "grunt-simple-mocha": "~0.4.0",
+    "chai": "1.7.2",
+    "grunt-contrib-nodeunit": "~0.1.2"
   },
   "keywords": [
-    "gruntplugin", "bower"
+    "gruntplugin",
+    "bower"
   ]
 }

@@ -34,14 +34,16 @@ module.exports = function(grunt) {
 
   function install(callback) {
     bower.commands.install()
-      .on('data', log)
+      .on('log', function(result) {
+        log(['bower', result.id.cyan, result.message].join(' '));
+      })
       .on('error', fail)
       .on('end', callback);
   }
 
   function copy(options, callback) {
     var bowerAssets = new BowerAssets(bower, options.cwd);
-    bowerAssets.once('data', function(assets) {
+    bowerAssets.on('end', function(assets) {
       var copier = new AssetCopier(assets, options, function(source, destination, isFile) {
         log('grunt-bower ' + 'copying '.cyan + ((isFile ? '' : ' dir ') + source + ' -> ' + destination).grey);
       });
@@ -63,10 +65,10 @@ module.exports = function(grunt) {
         verbose: false,
         copy: true
       }),
-      add = function(name, fn) {
+      add = function(successMessage, fn) {
         tasks.push(function(callback) {
           fn(function() {
-            grunt.log.ok(name);
+            grunt.log.ok(successMessage);
             callback();
           });
         });
